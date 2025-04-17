@@ -1,0 +1,4 @@
+[33m49f07fb[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m HEAD@{0}: commit: Add necessary files for project reconstruction
+[33m0a2b290[m HEAD@{1}: commit: Remove .devcontainer directory from git tracking
+[33m2f59986[m HEAD@{2}: commit: Remove sdkconfig files from git tracking
+[33me91181e[m HEAD@{3}: commit (initial): Initial commit: ESP32 LVGL project with LCD display support
