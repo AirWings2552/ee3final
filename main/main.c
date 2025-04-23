@@ -73,19 +73,19 @@ void app_main(void)
     // lcd_display_start();
     
     // Initialize network
-    esp_err_t ret = init_network();
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to initialize network");
-        return;
-    }
+    // esp_err_t ret = init_network();
+    // if (ret != ESP_OK) {
+    //     ESP_LOGE(TAG, "Failed to initialize network");
+    //     return;
+    // }
 
     // Create GET request task
     // xTaskCreate(&get_request_task, "get_request_task", 8192, NULL, 5, NULL);
     // Create POST request task
-    xTaskCreate(&post_request_task, "post_request_task", 8192, NULL, 5, NULL);
+    // xTaskCreate(&post_request_task, "post_request_task", 8192, NULL, 5, NULL);
     
     
-    nrf24ol_TX_init(); // Initialize the nrf24 to TX mode to send a request to pic18 asking for data
+    nrf24ol_RX_init(); // Initialize the nrf24 to TX mode to send a request to pic18 asking for data
     
 
     // Main loop - can be used for other tasks in the future
@@ -96,19 +96,20 @@ void app_main(void)
 
         // above function will be done in the request task;
         if(!data_changed){
-            send_request_to_pic18();
+            // send_request_to_pic18();
             
-            vTaskDelay(pdMS_TO_TICKS(100));
+            // vTaskDelay(pdMS_TO_TICKS(100));
 
             uint8_t status = nrf_read_register(NRF_REG_STATUS);
             
             if (status & (1 << 6)) {
-                uint8_t len = nrf_read_ackPayload_len();
+                // uint8_t len = nrf_read_ackPayload_len();
                 uint8_t ackPayload[4] ={0};
                 // ackPayload[10] = '\0';
-                nrf_read_payload(ackPayload, sizeof(ackPayload));
-                printf("Received ackPayload: %d %d %d %d\n",ackPayload[0],ackPayload[1],ackPayload[2],ackPayload[3]);//H,T
-                printf("Received ackPayload length: %d\n", len);
+                nrf_read_payload(ackPayload, 4);
+                printf("Received ackPayload: %d %d %d %d\n",ackPayload[0],ackPayload[1],ackPayload[2],ackPayload[3]);//H,R,T
+                // printf("Received ackPayload length: %d\n", len);
+                nrf_write_register(NRF_CMD_FLUSH_RX,0xFF);
                 nrf_write_register(NRF_REG_STATUS,0x40); // 清除中断标志
                 for(int i=0;i<4;i++){
                     global_sensor_data[i] = ackPayload[i];

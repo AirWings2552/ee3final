@@ -220,7 +220,7 @@ esp_err_t https_post_request()
 
     char post_data[128];
     float temp = global_sensor_data[2] + global_sensor_data[3] / 10.0f;
-    float humi = global_sensor_data[0] + global_sensor_data[1] / 10.0f;
+    float humi = global_sensor_data[0] + 0 / 10.0f;
     snprintf(post_data, sizeof(post_data),"{\"room_id\":1,\"current_temp\":%.2f,\"current_humi\":%.2f}", temp,humi);
     printf("Data sent: %s\n",post_data);
     esp_http_client_set_method(client, HTTP_METHOD_POST);

@@ -48,7 +48,7 @@ void nrf_init_sender() {
     nrf_write_register(NRF_REG_SETUP_AW,0x03);
     nrf_write_register_multi(NRF_REG_RX_ADDR_P0, rx_address, 5);
     nrf_write_register_multi(NRF_REG_TX_ADDR,tx_address,5);
-    nrf_write_register(NRF_REG_RX_PW_P0, 0x20); // 设置接收数据宽度为 32 字节
+    // nrf_write_register(NRF_REG_RX_PW_P0, 0x20); // 设置接收数据宽度为 32 字节
     nrf_write_register(NRF_REG_EN_AA, 0x01);    // 启用自动应答
     nrf_write_register(NRF_REG_SETUP_RETR, 0x26);
 }
